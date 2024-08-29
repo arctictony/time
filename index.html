@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>144 Square Grid App</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .square {
+            aspect-ratio: 1;
+            border: 1px solid #ccc;
+            transition: background-color 0.3s;
+        }
+        .filled {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid" id="grid"></div>
+    <script>
+        const grid = document.getElementById('grid');
+        const squares = [];
+
+        // Create 144 squares
+        for (let i = 0; i < 144; i++) {
+            const square = document.createElement('div');
+            square.className = 'square';
+            grid.appendChild(square);
+            squares.push(square);
+        }
+
+        function updateGrid() {
+            const now = new Date();
+            const minutesSinceMidnight = now.getHours() * 60 + now.getMinutes();
+            const squaresToFill = Math.floor(minutesSinceMidnight / 10);
+
+            squares.forEach((square, index) => {
+                if (index < squaresToFill) {
+                    square.classList.add('filled');
+                } else {
+                    square.classList.remove('filled');
+                }
+            });
+        }
+
+        // Update grid every minute
+        setInterval(updateGrid, 60000);
+        updateGrid(); // Initial update
+    </script>
+</body>
+</html>
